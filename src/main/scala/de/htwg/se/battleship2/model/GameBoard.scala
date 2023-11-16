@@ -30,7 +30,7 @@ case class GameBoard(rows: Int, cols: Int) {
 object Main {
   def main(args: Array[String]): Unit = {
     val gameBoard = GameBoard(rows = 5, cols = 5)
-    println("Welcome to Battleship2 \n")
+    println("Welcome to Battleship2\n")
     println(gameBoard.printBoard())
 
   }
