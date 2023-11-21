@@ -1,37 +1,29 @@
-case class GameBoard(rows: Int, cols: Int) {
+import scala.io.StdIn.readLine
+import de.htwg.se.battleship2.model.Filled
+import de.htwg.se.battleship2.model.Matrix
+import de.htwg.se.battleship2.model.Field
+import de.htwg.se.battleship2.model.PlaceShip
 
-  val eol: String = sys.props("line.separator")
+object Main:
+  def main(args: Array[String]): Unit =
+    val field = new Field(6, 4, Filled.Empty)
+    println(field)
+    loop(field)
 
-  def border(cols: Int): String = "  X" + "  X" * cols + "  X" + eol
-
-  def letters(cols: Int): String = {
-    val letters = ('A' until ('A' + cols).toChar).map(_.toString).mkString("  ")
-    s"     $letters" + eol
-  }
-
-  def generateBoard(rows: Int, cols: Int): String = {
-    val rowIndices = (0 until rows).map(i => (i + 1).toString)
-    val gameBoardRows = (0 until rows).map { i =>
-      (0 until cols).map(row => "  -").mkString("X", "", "  X")
+  def loop( field: Field): Unit =
+    while (true) {
+      println("Eingabe")
+      val input = readLine()
+      val chars = input.toCharArray
+      val x = chars(0)
+      val y = chars(1)
+      val updatedField: Field = field.putShip(
+        x,
+        y.toString()
+      ) // Beispiel: Hier die Benutzerinteraktion einfügen
+      println(updatedField)
+      loop(updatedField)
     }
-    val boardWithIndices = rowIndices
-      .zip(gameBoardRows)
-      .map { case (idx, row) =>
-        s"$idx $row" + eol
-      }
-      .mkString
-    s"$boardWithIndices"
-  }
+      
 
-  def printBoard(): String =
-    letters(cols) + border(cols) + generateBoard(rows, cols) + border(cols)
-}
-
-object Main {
-  def main(args: Array[String]): Unit = {
-    val gameBoard = GameBoard(rows = 5, cols = 5)
-    println("Welcome to Battleship2 \n")
-    println(gameBoard.printBoard())
-
-  }
-}
+    
