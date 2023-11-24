@@ -14,7 +14,7 @@ case class Field(matrix: Matrix[Filled]):
   def cells(row: Int, length: Int): String =
     val cellRow = matrix.row(row).map(_.toString).map(" " * ((length - 1) / 2) + _ + " " * ((length - 1) / 2)).mkString("|", "|", "|")
     val rowNumber =
-      " " + (row + 1).toString // Startnummer bei 1 für die Zeilennummerierung
+      " " + (row + 1).toString 
     cellRow + rowNumber + "\n"
 
   def mesh(lenght: Int = 3) =

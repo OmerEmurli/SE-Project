@@ -45,8 +45,20 @@ class FieldSpec extends AnyWordSpec {
 
         field2.mesh(3) should be(expectedMesh)
     }
+      /*"put a Ship on an 1x1 Field" in {
 
+        val expctedPut = 
+        "  A\n" +
+        "+---+\n" +
+        "| O | 1\n" +
+        "+---+\n" 
+        
 
+        field1.putShip('A', "1") should be(expctedPut)
+
+        
+      }
+      */
                
    }
  }
