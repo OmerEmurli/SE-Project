@@ -7,9 +7,7 @@ import model.Filled
 
 
 @main def main: Unit =
-  //TUI(Controller(new Field(5, 4, Filled.Empty))).run
+  TUI(Controller(new Field(5, 4, Filled.Empty))).run
 
-  val field = new Field(1, 1, Filled.Empty)
-  println(field.toString)
   
 
