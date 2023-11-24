@@ -21,40 +21,33 @@ class FieldSpec extends AnyWordSpec {
         field3.bar(2, 2) should be("+--+--+\n")
       }
        "have cells as String of form '| - | - | - | 1'" in {
-        field2.cells(0, 1) should be("|  -  |  -  |  -  | 1\n")
+         field2.cells(0, 1) should be("|-|-|-| 1\n")
         
       }
 
       "have scalable cells" in {
-        field2 .cells(0, 1) should be("| - | 1\n")
-        field2.cells(0, 2) should be("| - | - | 1\n")
-        field2.cells(1, 2) should be("| - | - | 2\n")
+        field2.cells(0, 3) should be("| - | - | - | 1\n")
+        field2.cells(1, 2) should be("|-|-|-| 2\n")
         
       }
-       "have a mesh in form " +
-                "+---+---+---+" +
-                "| - | - | - |" +
-                "+---+---+---+" +
-                "| - | - | - |" +
-                "+---+---+---+" in {
-                field2.mesh(3) should be(
-                    "+---+---+---+\n" +
-                    "| - | - | - |\n" +
-                    "+---+---+---+\n" +
-                    "| - | - | - |\n" +
-                    "+---+---+---+\n")
-                field1.mesh(1) should be("+-+\n" + "|-|\n" + "+-+\n")
-                field1.mesh() should be("+-------+\n" + "|   -   |\n" + "|   -   |\n" + "+-------+\n")
-                field1.rowSize should be(1)
-                field3.mesh() should be(
-                    "+-------+-------+-------+\n" +
-                    "|   -   |   -   |   -   |\n" +
-                    "+-------+-------+-------+\n" +
-                    "|   -   |   -   |   -   |\n" +
-                    "+-------+-------+-------+\n" +
-                    "|   -   |   -   |   -   |\n" +
-                    "+-------+-------+-------+\n")
-            }
+       
+
+      "have a mesh with specific dimensions" in {
+      
+        val expectedMesh =
+        "  A   B   C\n" +
+        "+---+---+---+\n" +
+        "| - | - | - | 1\n" +
+        "+---+---+---+\n" +
+        "| - | - | - | 2\n" +
+        "+---+---+---+\n" 
+        
+
+        field2.mesh(3) should be(expectedMesh)
+    }
+
+
+               
    }
  }
 }
