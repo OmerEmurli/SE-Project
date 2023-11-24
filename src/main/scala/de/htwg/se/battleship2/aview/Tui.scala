@@ -32,4 +32,4 @@ class TUI(controller: Controller) extends Observer:
         println(updatedField)
         loop(updatedField, updatedLoop)
       case 0 =>
-        println("Spiel beendet.")
+        println("End of Game.")
