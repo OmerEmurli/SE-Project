@@ -32,6 +32,23 @@ case class Field(matrix: Matrix[Filled]):
     val y = number.toInt - 1
     put(Filled.Ship, y, x)
 
+  
+  def attac(letter: Char, number: String): Field = 
+    val x = letterToNumber(letter)
+    val y = number.toInt - 1
+
+    matrix.cell(y, x) match 
+      case Filled.Ship =>
+        put(Filled.Hit, y, x)
+      case _ =>
+        println("Missed!") 
+        put(Filled.Empty, y, x)
+
+  def gameIsFinished: Boolean = false
+    //val shipsLeft = matrix.vec.flatten.exists(_ == Filled.Ship)
+   // !shipsLeft
+
+
   override def toString = mesh()
 
   val rowSize = matrix.rowSize
