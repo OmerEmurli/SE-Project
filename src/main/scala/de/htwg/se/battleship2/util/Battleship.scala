@@ -1,12 +1,12 @@
 package de.htwg.se.battleship2
 
-
-import aview.TUI
+import aview.{GUI, TUI}
 import controller.Controller
-import model.Field
-import model.Filled
 import util.PlayerMode
-import aview.Template
 
-
-@main def setup = TUI(Controller(PlayerMode.selectPlayerMode)).run
+@main def setup =
+  val controller = Controller(PlayerMode.oneShip) // Initialisiere mit einem Standardfeld
+  val tui = TUI(controller)
+  val gui = new GUI(controller)
+  gui.visible = true
+  tui.run

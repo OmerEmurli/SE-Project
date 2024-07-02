@@ -1,8 +1,7 @@
-package de.htwg.se.battleship2
-
-package util
+package de.htwg.se.battleship2.util
 
 enum GameState:
-    case Running
-    case Finished
-    case Placing
+  case Running
+  case Finished
+  case Placing
+  case Attacking
