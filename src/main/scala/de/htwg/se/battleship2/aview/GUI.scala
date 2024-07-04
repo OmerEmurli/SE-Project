@@ -3,11 +3,13 @@ package de.htwg.se.battleship2.aview
 import scala.swing._
 import scala.swing.event._
 import de.htwg.se.battleship2.controller.controllerComponent._
+import de.htwg.se.battleship2.controller.controllerComponent.controllerImpl._
 import de.htwg.se.battleship2.util._
 import java.awt.Color
 import de.htwg.se.battleship2.model.fieldComponent.fieldImpl._
+import de.htwg.se.battleship2.model.fieldComponent._
 
-class GUI(controller: ControllerInterface) extends MainFrame with Observer:
+class GUI(using controller: ControllerInterface) extends MainFrame with Observer:
 
   title = "Battleship"
   preferredSize = new Dimension(800, 600)

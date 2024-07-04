@@ -1,12 +1,12 @@
-package de.htwg.se.battleship2
+import de.htwg.se.battleship2.aview.{GUI, TUI}
+import de.htwg.se.battleship2.controller.controllerComponent._
+import de.htwg.se.battleship2.controller.controllerComponent.controllerImpl._
+import de.htwg.se.battleship2.DefaultDependencies.{given, _} // Importiere die given-Instanzen korrekt
 
-import de.htwg.se.battleship2.controller.controllerComponent.controllerImpl.Controller
-import de.htwg.se.battleship2.aview.{TUI, GUI}
-import de.htwg.se.battleship2.util.Playermode
-
-@main def setup =
-  val controller = Controller(Playermode.oneShip) // Initialisiere mit einem Standardfeld
-  val tui = TUI(controller)
-  val gui = new GUI(controller)
+@main def setup: Unit = {
+  val controller = summon[ControllerInterface]
+  val tui = new TUI(using controller)
+  val gui = new GUI(using controller)
   gui.visible = true
   tui.run
+}
