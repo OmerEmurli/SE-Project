@@ -2,7 +2,7 @@ package de.htwg.se.battleship2
 package aview
 
 import util.{Observer, GameState}
-import controller.Controller
+import controller.controllerComponent.controllerImpl.Controller
 
 
 /* template pattern */

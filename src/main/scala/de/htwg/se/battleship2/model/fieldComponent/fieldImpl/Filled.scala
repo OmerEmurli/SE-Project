@@ -1,4 +1,4 @@
-package de.htwg.se.battleship2.model
+package de.htwg.se.battleship2.model.fieldComponent.fieldImpl
 
 enum Filled(StringRepresentation: String) {
   override def toString = StringRepresentation

@@ -1,31 +1,20 @@
 package de.htwg.se.battleship2.util
 
-import de.htwg.se.battleship2.model.{Field, Filled}
+import de.htwg.se.battleship2.model.fieldComponent._
+import de.htwg.se.battleship2.model.fieldComponent.fieldImpl._
 
-object PlayerMode:
-  var input = ""
-  var selectPlayerMode = getInput
-  var countShip = getShips
+object Playermode:
+  def createField(shipCount: Int): FieldInterface =
+    val (rows, cols) = shipCount match
+      case 1 => (4, 4)
+      case 2 => (6, 6)
+      case 3 => (8, 8)
+      case 4 => (10, 10)
+      case _ => (4, 4) // Standardgröße falls unübliche Schiffszahl
 
-  def getInput: Field =
-    selectPlayerMode = input match
-      case "1" => oneShip
-      case "2" => twoShips
-      case "3" => threeShips
-      case "4" => fourShips
-      case _   => oneShip
-    selectPlayerMode
+    new Field(new Matrix(Vector.tabulate(rows, cols)((_, _) => Filled.Empty)))
 
-  def oneShip = new Field(2, 2, Filled.Empty)
-  def twoShips = new Field(4, 4, Filled.Empty)
-  def threeShips = new Field(6, 6, Filled.Empty)
-  def fourShips = new Field(9, 9, Filled.Empty)
-
-  def getShips: Int =
-    countShip = input match
-      case "1" => 2
-      case "2" => 4
-      case "3" => 6
-      case "4" => 8
-      case _   => 2
-    countShip
+  val oneShip: FieldInterface = createField(1)
+  val twoShips: FieldInterface = createField(2)
+  val threeShips: FieldInterface = createField(3)
+  val fourShips: FieldInterface = createField(4)

@@ -2,25 +2,23 @@ package de.htwg.se.battleship2.aview
 
 import scala.swing._
 import scala.swing.event._
-import de.htwg.se.battleship2.controller.Controller
-import de.htwg.se.battleship2.util.Observer
-import de.htwg.se.battleship2.model.Filled
-import de.htwg.se.battleship2.util.GameState
+import de.htwg.se.battleship2.controller.controllerComponent._
+import de.htwg.se.battleship2.util._
 import java.awt.Color
+import de.htwg.se.battleship2.model.fieldComponent.fieldImpl._
 
-class GUI(controller: Controller) extends MainFrame with Observer {
+class GUI(controller: ControllerInterface) extends MainFrame with Observer:
 
   title = "Battleship"
   preferredSize = new Dimension(800, 600)
-  background = new Color(50, 50, 50) // Dunkler Hintergrund
+  background = new Color(50, 50, 50)
 
   controller.add(this)
 
   val cellSize = 30
 
-  // Initial GUI components
   val startPanel = new BorderPanel {
-    background = new Color(50, 50, 50) // Dunkler Hintergrund
+    background = new Color(50, 50, 50)
     val welcomeLabel = new Label("Welcome to Battleship") {
       foreground = Color.WHITE
       font = new Font("Arial", java.awt.Font.BOLD, 24)
@@ -57,13 +55,13 @@ class GUI(controller: Controller) extends MainFrame with Observer {
   var grid: GridPanel = _
 
   def createGrid(): GridPanel = {
-    val newGrid = new GridPanel(controller.field.rowSize + 1, controller.field.colSize + 1) {
-      preferredSize = new Dimension((controller.field.colSize + 1) * cellSize, (controller.field.rowSize + 1) * cellSize)
-      background = new Color(50, 50, 50) // Dunkler Hintergrund
+    val newGrid = new GridPanel(controller.getField.rowSize + 1, controller.getField.colSize + 1) {
+      preferredSize = new Dimension((controller.getField.colSize + 1) * cellSize, (controller.getField.rowSize + 1) * cellSize)
+      background = new Color(50, 50, 50)
 
-      contents += new Label("") // Top-left corner empty cell
+      contents += new Label("")
 
-      for (col <- 1 to controller.field.colSize) {
+      for (col <- 1 to controller.getField.colSize) {
         contents += new Label(('A' + col - 1).toChar.toString) {
           preferredSize = new Dimension(cellSize, cellSize)
           horizontalAlignment = Alignment.Center
@@ -71,14 +69,14 @@ class GUI(controller: Controller) extends MainFrame with Observer {
         }
       }
 
-      for (row <- 0 until controller.field.rowSize) {
+      for (row <- 0 until controller.getField.rowSize) {
         contents += new Label((row + 1).toString) {
           preferredSize = new Dimension(cellSize, cellSize)
           horizontalAlignment = Alignment.Center
           foreground = Color.WHITE
         }
 
-        for (col <- 0 until controller.field.colSize) {
+        for (col <- 0 until controller.getField.colSize) {
           val cell = new Button {
             preferredSize = new Dimension(cellSize, cellSize)
             reactions += { case ButtonClicked(_) =>
@@ -128,23 +126,23 @@ class GUI(controller: Controller) extends MainFrame with Observer {
 
   override def update: Unit = {
     if (grid != null) {
-      for (row <- 0 until controller.field.rowSize; col <- 0 until controller.field.colSize) {
-        val index = (row + 1) * (controller.field.colSize + 1) + (col + 1)
+      for (row <- 0 until controller.getField.rowSize; col <- 0 until controller.getField.colSize) {
+        val index = (row + 1) * (controller.getField.colSize + 1) + (col + 1)
         val cell = grid.contents(index).asInstanceOf[Button]
-        val state = controller.field.matrix.cell(row, col)
+        val state = controller.getField.matrix.cell(row, col)
         state match {
           case Filled.Ship =>
             cell.text = ""
-            cell.background = new Color(0, 255, 0) // Green for ship
+            cell.background = new Color(0, 255, 0)
           case Filled.Hit =>
             cell.text = ""
-            cell.background = new Color(255, 0, 0) // Red for hit
+            cell.background = new Color(255, 0, 0)
           case Filled.Miss =>
             cell.text = ""
-            cell.background = new Color(255, 255, 0) // Yellow for miss
+            cell.background = new Color(255, 255, 0)
           case Filled.Empty =>
             cell.text = ""
-            cell.background = new Color(173, 216, 230) // Light blue for empty
+            cell.background = new Color(173, 216, 230)
         }
       }
     }
@@ -161,7 +159,7 @@ class GUI(controller: Controller) extends MainFrame with Observer {
     if (controller.state == GameState.Placing) {
       controller.put(('A' + col).toChar, (row + 1).toString)
     } else if (controller.state == GameState.Attacking) {
-      controller.attac(('A' + col).toChar, (row + 1).toString)
+      controller.attack(('A' + col).toChar, (row + 1).toString)
       if (controller.state == GameState.Finished) {
         Dialog.showMessage(contents.head, "All ships sunk. Game over!", title = "Game Over")
       }
@@ -169,4 +167,3 @@ class GUI(controller: Controller) extends MainFrame with Observer {
   }
 
   visible = true
-}
